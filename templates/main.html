@@ -7,13 +7,15 @@
 	<title>Where The Fu** Are You?</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
+  <base href="<?php echo $BASE; ?>/">
   <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700|Arapey" rel="stylesheet" type="text/css" />
-  <link href="../public/stylesheet/style.css" rel="stylesheet" type="text/css" />
-  <link href="../public/stylesheet/mfglabs_iconset.css" rel="stylesheet"  type="text/css" />
-  <link href="../public/stylesheet/wtfay.css" rel="stylesheet" type="text/css" />
+  <link href="public/stylesheet/style.css" rel="stylesheet" type="text/css" />
+  <link href="public/stylesheet/mfglabs_iconset.css" rel="stylesheet"  type="text/css" />
+  <link href="public/stylesheet/wtfay.css" rel="stylesheet" type="text/css" />
   
 </head>
 <body class="clearfix">
+  <h1><?php if(isset($PARAMS['name'])):echo $PARAMS['name']; endif ?></h1>
   <header>
     <a href="">WTFAY</a>
     <form action="users/search" method="post">
@@ -50,11 +52,15 @@
     <li><a href="users/z">z</a></li>
   </ul>
   <ul class="users">
-    <li><a href="user/han.solo">Han Solo</a><i class="icon-star"></i></li>
-    <li><a href="user/han.solo">Han Solo</a><i class="icon-star"></i></li>
-    <li><a href="user/han.solo">Han Solo</a><i class="icon-star"></i></li>
-    <li><a href="user/han.solo">Han Solo</a><i class="icon-star"></i></li>
-    <li><a href="user/han.solo">Han Solo</a><i class="icon-star"></i></li>
+    <?php
+    if(isset($users)) :
+        foreach($users as $user):
+    ?>
+      <li><a href="user/han.solo"><?php echo $user; ?></a><i class="icon-star"></i></li>
+    <?php
+    endforeach;
+    endif;
+    ?>
     
   </ul>
   </section>
