@@ -12,7 +12,13 @@ $f3->route('GET /users/@alpha',function($f3){
   //print_r($f3->get('dB')->exec('select * from wifiloc where firstname like "'.$f3->get('PARAMS.alpha').'%"'));
   $users=new DB\SQL\Mapper($f3->get('dB'),'wifiloc');
   $f3->set('users',$users->find('firstname like "'.$f3->get('PARAMS.alpha').'%"'));
-  echo View::instance()->render('main.html');
+  if($f3->get('AJAX')){
+    echo View::instance()->render('partials/users.html');
+  }
+  else{
+    echo View::instance()->render('main.html');
+  }
+  
 });
 
 
