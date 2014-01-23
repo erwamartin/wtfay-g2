@@ -17,3 +17,17 @@ $('body').on('click', '.users a', function(evt){
 		$('section+section').html(data);
 	})
 });
+
+$('input[name=name]').on('keyup', function(evt){
+	evt.preventDefault();
+
+	var $form = $(this).parent();
+	$.ajax({
+		url : $form.attr('action'), 
+		method : $form.attr('method'), 
+		data : $form.serialize()
+	})
+	.success(function(data){
+		$('.users').html(data);
+	})
+});
