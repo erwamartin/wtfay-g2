@@ -1,28 +1,28 @@
 <?php
 	
-	class App_model{
+	class App_model extends Model{
 
-		function _construct(){
+		private $mapper;
+
+		public function __construct(){
+			parent::__construct();
+			$this->mapper = $this->getMapper('wifiloc');
+		}
+
+		public function home(){
 
 		}
 
-		function home(){
-
+		public function getUsers($params){
+			return $this->mapper->find(array('promo=?',$params['promo']),array('order' => 'lastname'));
 		}
 
-		function getUsers($f3, $params){
-			$users = new DB\SQL\Mapper($f3->get('dB'),'wifiloc');
-			return $users->find('firstname like "'.$params['name'].'%"');
+		public function getUser($params){
+			return  $this->mapper->load(array('userId=?',$params['name']));
 		}
 
-		function getUser($f3, $params){
-			$user = new DB\SQL\Mapper($f3->get('dB'),'wifiloc');
-			return $user->load('userId = "'.$params['name'].'"');
-		}
-
-		function searchUsers($f3, $params){
-			$user = new DB\SQL\Mapper($f3->get('dB'),'wifiloc');
-			return $user->find('firstname LIKE "%'.$params['keywords'].'%" OR lastname LIKE "%'.$params['keywords'].'%"');
+		public function searchUsers($params){
+			return  $this->mapper->find('firstname LIKE "%'.$params['keywords'].'%" OR lastname LIKE "%'.$params['keywords'].'%"');
 		}
 
 	}

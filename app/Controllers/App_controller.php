@@ -1,35 +1,31 @@
 <?php
 
-	class App_controller{
-		function _construct(){
+	class App_controller extends Controller{
 
+		public function __construct(){
+			parent::__construct();
+			$this->tpl = array('sync' => 'main.html');
 		}
 
-		function home(){
-			echo View::instance()->render('main.html');
-		}
+		public function home(){}
 
-		function getUsers($f3){
+		public function getUsers($f3){
 			$model = new App_model();
-			$f3->set('users', $model->getUsers($f3, array('name'=>$f3->get('PARAMS.name'))));
-
-			echo View::instance()->render(($f3->get('AJAX'))?'partials/users.html':'main.html');
+			$f3->set('users', $model->getUsers(array('promo'=>$f3->get('PARAMS.promo'))));
+			$this->tpl['async'] = 'partials/users.html';
 		}
 
-		function getUser($f3){
+		public function getUser($f3){
 
 			$model = new App_model();
-			$f3->set('user', $model->getUser($f3, array('name'=>$f3->get('PARAMS.name'))));
-
-			echo View::instance()->render(($f3->get('AJAX'))?'partials/user.html':'main.html');
+			$f3->set('user', $model->getUser(array('name'=>$f3->get('PARAMS.name'))));
+			$this->tpl['async'] = 'partials/user.html';
 		}
 
-		function searchUsers($f3){
+		public function searchUsers($f3){
 			$model = new App_model();
-			$f3->set('users', $model->searchUsers($f3, array('keywords' => $f3->get('POST.name'))));
-
-			//echo $f3->get('dB')->log();
-			echo View::instance()->render(($f3->get('AJAX'))?'partials/users.html':'main.html');
+			$f3->set('users', $model->searchUsers(array('keywords' => $f3->get('POST.name'))));
+			$this->tpl['async'] = 'partials/users.html';
 		}
 	}
 
