@@ -11,12 +11,12 @@ class App_model{
  
  function getUsers($f3,$params){
    $users=new DB\SQL\Mapper($f3->get('dB'),'wifiloc');
-   return $users->find('firstname like "'.$params['alpha'].'%"');
+   return $users->find(array('promo=?',$params['promo']),array('order'=>'lastname'));
  }
  
  function getUser($f3,$params){
    $user=new DB\SQL\Mapper($f3->get('dB'),'wifiloc');
-   return $user->load('userId="'.$params['userId'].'"');
+   return $user->load(array('userId=?',$params['userId']));
  }
  
  function searchUsers($f3,$params){
